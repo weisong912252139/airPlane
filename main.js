@@ -148,7 +148,7 @@ function attack() {
 
 
 	// 敌机来袭
-	if(num < 11) {
+	if(num < 20) {
 	   // 小型敌机
 	   var enemy1 = new Enemy(x1,-200,38,34,enemy1Img,50,speed1,1,100,5);
 	   enemyArr.push(enemy1);
