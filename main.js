@@ -36,7 +36,7 @@ function loadAudios() {
 		music.loop = true;
 		music.volume = 0.8;
 		audioLists.push(music);
-		
+
 		//当音频加载完毕时
 		music.onloadedmetadata = function () {
 			audioNum ++;
@@ -64,19 +64,19 @@ function main () {
 	background.move();
 	//战机升空
 	fighter.draw();
-	
+
 	//敌机,道具,出现 ;  子弹发射
-	
+
 	attack();
-	
-	
-	
+
+
+
 //	var b = new Bullet(fighter.x + fighter.w/2,fighter.y - 5,6,14,bullet1Img,30);
 //	b.shoot();
-//	
+//
 //	var e1 = new Enemy(100,200,38,34,enemy1Img,30,5,1,100,5);
 //	e1.move();
-//	
+//
 //	var e2 = new Enemy(200,100,46,64,enemy3Img,60,3,2,200,6);
 //	e2.move();
 //
@@ -133,22 +133,22 @@ function attack() {
 	var x4 = randNum(0,canvas.width- 39);//道具
 	//随机敌机出现的概率
 	var num = randNum(1,400);
-	
+
 	//随机道具的出现概率
-	var prop1 = randNum(1,180)//炸弹大招
-	var prop2= randNum(1,150)//双发大招
-	var prop3 = randNum(1,180)//连发大招
+	var prop1 = randNum(1,300)//炸弹大招
+	var prop2= randNum(1,200)//双发大招
+	var prop3 = randNum(1,200)//连发大招
 	//随机速度
 	var speed1 = randNum(3,8);
 	var speed2 = randNum(1,5);
 	var speed3 = randNum(2,7);
 	//道具类型
 	var propType = randNum(0,2);
-	
 
-	
+
+
 	// 敌机来袭
-	if(num < 9) {
+	if(num < 11) {
 	   // 小型敌机
 	   var enemy1 = new Enemy(x1,-200,38,34,enemy1Img,50,speed1,1,100,5);
 	   enemyArr.push(enemy1);
@@ -164,14 +164,14 @@ function attack() {
 	   }
 	}
 	//遍历敌机数组和子弹数组  碰撞检测
-	
+
 	for(var i = 0; i < enemyArr.length; i ++) {
 		//遍历一下子弹数组
 		for(var j = 0; j < bullets.length; j ++) {
 			//判断敌机是否被击中 若没有被击中 ,做正常的碰撞检测
 			if(enemyArr[i].isHit == false) {
 				if(isCrash(enemyArr[i],bullets[j])) {
-					// 如果子弹击中敌机 敌机的生命值递减 (减去子弹的攻击力值) 
+					// 如果子弹击中敌机 敌机的生命值递减 (减去子弹的攻击力值)
 					enemyArr[i].hp -= bullets[j].hurts;
 					// 当敌机生命值小于等于 0 的时候,代表被击毁
 					if(enemyArr[i].hp <= 0) {
@@ -180,12 +180,12 @@ function attack() {
 					};
 					// 子弹移除(从数组中删除该子弹)
 					bullets.splice(j,1);
-					
+
 				}
 			}
-			
+
 		};
-		
+
 		//战机和敌机是否相撞
 		if(isCrash(enemyArr[i],fighter)) {
 			// 战机被撞毁
@@ -199,14 +199,14 @@ function attack() {
 			audioLists[0].pause();//停止子弹音效
 			audioLists[6].play();//播放结束音效
 		};
-		
+
 		// 敌机正常飞过领空 ()
 		// 超出范围的处理
 		if(enemyArr[i].y > canvas.height) {
 			// 敌机飞出领空,就将刺激从数组移除
 			enemyArr.splice(i,1);
 		};
-		
+
 		if(enemyArr[i]){
 			// 移动
 			enemyArr[i].move();
@@ -218,15 +218,15 @@ function attack() {
                 enemyArr.splice(i,1);
                 // 循环变量递减  移除之后改变了原来的数组所以要减去一
                 i --;
-                
+
 			}
 		}
 	}
-	
+
 	/********以上是遍历是否碰撞**********/
-	
+
 	//发射出现
-	
+
 //	var b = new Bullet(fighter.x + fighter.w/2,fighter.y - 5,6,14,bullet1Img,30);
 //	b.shoot();
 	//子弹未被清除时,代表此时战机还存活
@@ -245,7 +245,7 @@ function attack() {
 			// 默认的单排子弹
 			bullet = new Bullet(fighter.x + fighter.w/2,fighter.y - 5,6,14,bullet1Img,30);
 			break;
-			
+
 		}
 		bullet.shoot();//发射子弹
 	} else {
@@ -263,9 +263,9 @@ function attack() {
         	  menu.style.display = 'block';
         	  totalScore.innerHTML = scoreDiv.innerHTML;
         }
-        
+
 	}
-	
+
 	// 出现道具
 	//若没有出现道具时,随机概率出现任意一种道具
 	if(prop1 < 5 && hasProp == false) {
@@ -301,7 +301,7 @@ function attack() {
 			hasProp = false;
 		}
 	}
-	
+
 	//获取的是炸弹道具
 	if(isUseful == true){
 		//右下角出现
@@ -328,7 +328,7 @@ function attack() {
 			interval = 10;
 		}
 	}
-	
+
 	/****发射炸弹大招开始******/
 	   //pc端  点击空格发射大招
 	   document.onkeydown = function (event) {
@@ -339,7 +339,7 @@ function attack() {
 	   	 	}
 	   	 }
 	   }
-	   
+
 	    //为了兼容手机端应该有这个大招之后摇晃手机炸全屏
 	    var current = {
 				x : 0,
@@ -354,24 +354,24 @@ function attack() {
 			}
 			//设置定义摇晃的加速器的最小距离
 			var min = 10;
-			
+
 			//当手机陀螺仪移动时触发,
 			window.ondevicemotion = function (event) {
 				//获取加速器(包含设备的坐标信息)
 				var acceleration = event.accelerationIncludingGravity;
-				
+
 				//记录当前陀螺仪的值
 				current.x = acceleration.x;
 				current.y = acceleration.y;
 				current.z = acceleration.z;
 				//判断是否在晃动
-				var bool = Math.abs(after.x - current.x) >= min ||Math.abs(after.y - current.y) >= min ||Math.abs(after.z - current.z) >= min; 
+				var bool = Math.abs(after.x - current.x) >= min ||Math.abs(after.y - current.y) >= min ||Math.abs(after.z - current.z) >= min;
 				if(bool && isUseful) {
 			   	 		isFire = true;
 				}
 			}
-	    
-	    
+
+
 	/***start******如果战机还没有被击落,并且炸弹大招可用  点击空格时  销毁所有敌机  ***/
 	   if(fighterDown == false && isUseful == true && isFire == true) {
 	   	for(var i = 0; i < enemyArr.length; i ++) {
@@ -381,10 +381,10 @@ function attack() {
 	   		isFire = false;// 已发射后 状态置反
 	   	}
 	   }
-	   
-	  
+
+
 	/**end**发射炸弹大招结束**************************/
-	
+
 	/**********显示得分开始***************/
 	  scoreDiv.innerHTML = sumScore;
 	/**********显示得分开始***************/
@@ -482,9 +482,9 @@ var fighter = {
 	h : 82,
 	mx : 0,
 	draw : function () {
-	  a.drawImage(fightImg,this.mx,0,this.w,this.h,this.x,this.y,this.w,this.h);	
+	  a.drawImage(fightImg,this.mx,0,this.w,this.h,this.x,this.y,this.w,this.h);
 	}
-	
+
 }
 
 /*************************/
@@ -493,7 +493,7 @@ var fighter = {
 var boom = {
 	x : canvas.width - 42 - 20,
 	y : canvas.height - 36 - 20,
-	
+
 	//当获取到炸弹道具时,出现在右下角
 	draw : function () {
 		a.drawImage(boomImg,this.x,this.y)
@@ -536,8 +536,8 @@ canvas.addEventListener('touchstart',function (event) {
 	if(x > fighter.x && x < fighter.x + fighter.w && y > fighter.y && y < fighter.h + fighter.y) {
 		canvas.addEventListener('touchmove',flymove,false)
 	}
-	
-	
+
+
 },false);
 
 //触屏移动事件的处理函数
@@ -551,7 +551,7 @@ function flymove(event) {
 
 //触摸结束时,取消绑定
 canvas.addEventListener('touchend',function (){
-	canvas.removeEventListener('touchmove',flymove); 
+	canvas.removeEventListener('touchmove',flymove);
 });
 
 
@@ -562,7 +562,7 @@ var bullets = [];
 //控制子弹的发射的频率,就是中间发射的时间间隔
 var n = 0;
 var interval = 10;
-//位置  大小  绘制所用的图片 攻击力  
+//位置  大小  绘制所用的图片 攻击力
 function Bullet(x,y,w,h,img,hurts) {
 	this.x = x;
 	this.y = y;
@@ -598,14 +598,14 @@ function Bullet(x,y,w,h,img,hurts) {
 			}
 		}
 	};
-	
+
 }
 
 
 /******************道具类*****构造函数***************/
 //位置  大小  类型(0:炸弹道具 1 : 双发  2 : 连发子弹)  速度
 function Prop (x,y,w,h,kind,speed) {
-	this.x = x; 
+	this.x = x;
 	this.y = y;
 	this.w = w;
 	this.h = h;
@@ -619,17 +619,17 @@ function Prop (x,y,w,h,kind,speed) {
 		//绘制道具
 		a.drawImage(propImg,this.mx,0,this.w,this.h,this.x,this.y,this.w,this.h);
 	};
-	
+
 }
 
 /******************敌机类*****构造函数***************/
 //位置  大小  敌机的图片 生命值  敌机的速度  敌机的类型   敌机的分数  图片的帧数
 //hp 代表生命值  小型敌机:50  大型敌机: 200; 中型敌机 100;
 //敌机的类型type : 1代表小型敌机  2代表大型敌机  3代表中型敌机
-//分数score 击毁不同敌机对应的分数 
+//分数score 击毁不同敌机对应的分数
 function Enemy (x,y,w,h,img,hp,speed,type,score,frameNum) {
 	this.x = x;
-	this.y = y; 
+	this.y = y;
 	this.w = w;
 	this.h = h;
 	this.img = img;
@@ -637,8 +637,8 @@ function Enemy (x,y,w,h,img,hp,speed,type,score,frameNum) {
 	this.speed = speed;
 	this.type = type;
 	this.score = score;
-	
-	
+
+
 
 	this.type = type;
 	this.score = score;
@@ -649,10 +649,10 @@ function Enemy (x,y,w,h,img,hp,speed,type,score,frameNum) {
 	 this.isHit = false;
 	 //表示是否要清除该敌机的属性
 	 this.isClear = false;
-	
+
 	//敌机出现
 	this.move = function () {
-		
+
 		//是否被击中
 		if(!this.isHit) {
 			//水平方向控制多久移动一次
@@ -663,7 +663,7 @@ function Enemy (x,y,w,h,img,hp,speed,type,score,frameNum) {
 //			}
 			//若未被击中
 			this.y += this.speed;
-			
+
 		} else {
 			//被击中  切换图片位置  产生被击中的动画
 			this.mx += this.w;
@@ -676,7 +676,7 @@ function Enemy (x,y,w,h,img,hp,speed,type,score,frameNum) {
 		//绘制敌机
 		a.drawImage(this.img,this.mx,0,this.w,this.h,this.x,this.y,this.w,this.h);
 	};
-	
+
 	// 敌机爆炸
 	this.boom = function () {
 		// 改变状态
@@ -697,7 +697,7 @@ function Enemy (x,y,w,h,img,hp,speed,type,score,frameNum) {
 			break;
 		}
 	}
-	
+
 }
 
 /*****随机数函数***********/
@@ -726,26 +726,3 @@ function isCrash (obj1,obj2) {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
